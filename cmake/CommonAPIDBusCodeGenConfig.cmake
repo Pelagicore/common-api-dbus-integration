@@ -26,11 +26,13 @@ if(COMMON_API_DBUS_FOUND)
 	#link_directories(${COMMON_API_DBUS_LIBRARY_DIRS})
 
 	# Generates and installs a library containing a DBus stub and a proxy for the given interface
-	macro(install_commonapi_dbus_backend LIBRARY_NAME variableName deploymentFile idlFile interface)
+	macro(install_commonapi_dbus_backend LIBRARY_NAME variableName deploymentFile idlFile interface fidl_include_paths)
 
 		set(GENERATORS core dbus)
+		
+		prepare_fidl_temporary_location(${deploymentFile} ${idlFile} "${fidl_include_paths}")
 
-        get_generated_files_list("GENERATED_FILES" ${deploymentFile} "${GENERATORS}")
+                get_generated_files_list("GENERATED_FILES" ${deploymentFile} "${GENERATORS}")
 
 #		set(GENERATED_FILES
 #			${CMAKE_CURRENT_BINARY_DIR}/${COMMONAPI_GENERATED_FILES_LOCATION}/${interface}DBusStubAdapter.cpp
